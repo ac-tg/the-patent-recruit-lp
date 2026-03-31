@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>採用情報 | 川上特許事務所 - 理系の知を、未来の知財へ。</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-blue: #002B5B;
+            --gold: #D4AF37;
+            --gold-light: #f1d57a;
+            --soft-white: #f8fafc;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            color: var(--deep-blue);
+            background-color: #ffffff;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        .serif {
+            font-family: 'Noto Serif JP', serif;
+        }
+
+        /* Fade Up Animation Base */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .fade-up.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Gold Button Hover Effect */
+        .btn-gold {
+            background-color: var(--gold);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+
+        .btn-gold::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.5s ease;
+            z-index: -1;
+        }
+
+        .btn-gold:hover {
+            background-color: #b8962d;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-gold:hover::before {
+            left: 100%;
+        }
+
+        /* Border Extension Hover */
+        .btn-outline-gold {
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-gold:hover {
+            background-color: rgba(212, 175, 55, 0.05);
+            letter-spacing: 1px;
+        }
+
+        /* Custom Spacing for Logical Layout */
+        .section-padding {
+            padding-top: 120px;
+            padding-bottom: 120px;
+        }
+
+        /* Big Numbers */
+        .huge-number {
+            font-size: clamp(5rem, 15vw, 10rem);
+            line-height: 1;
+            font-weight: 700;
+            color: var(--deep-blue);
+            letter-spacing: -0.05em;
+        }
+
+        /* Navigation Glassmorphism */
+        nav {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Accordion Custom Styling */
+        .faq-item {
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .faq-item.open .faq-answer {
+            max-height: 500px;
+        }
+        .faq-item.open .faq-icon {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <nav class="fixed w-full z-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="text-2xl font-bold tracking-tighter flex items-center">
+                <span class="text-[var(--deep-blue)]">KAWAKAMI</span>
+                <span class="ml-2 text-sm font-medium border-l border-gray-300 pl-2 text-gray-500 uppercase tracking-widest">Patent Office</span>
+            </div>
+            <!-- PC メニュー -->
+            <div class="hidden md:flex space-x-8 text-sm font-medium">
+                <a href="#usp" class="hover:text-[var(--gold)] transition-colors">選ばれる理由</a>
+                <a href="#member" class="hover:text-[var(--gold)] transition-colors">弁理士紹介</a>
+                <a href="#voice" class="hover:text-[var(--gold)] transition-colors">お客様の声</a>
+                <a href="#faq" class="hover:text-[var(--gold)] transition-colors">FAQ</a>
+            </div>
+            <a href="#entry" class="btn-gold px-6 py-3 text-sm font-bold rounded-sm shadow-sm hidden md:block">
+                説明会に申し込む
+            </a>
+            <!-- ハンバーガーボタン（スマホのみ） -->
+            <button id="hamburger" class="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5" aria-label="メニューを開く">
+                <span class="hamburger-bar block w-6 h-0.5 bg-[var(--deep-blue)] transition-all duration-300"></span>
+                <span class="hamburger-bar block w-6 h-0.5 bg-[var(--deep-blue)] transition-all duration-300"></span>
+                <span class="hamburger-bar block w-6 h-0.5 bg-[var(--deep-blue)] transition-all duration-300"></span>
+            </button>
+        </div>
+        <!-- スマホ ドロワーメニュー -->
+        <div id="mobile-menu" class="md:hidden hidden flex-col bg-white border-t border-gray-100 px-6 py-4 space-y-4 text-sm font-medium shadow-lg">
+            <a href="#usp" class="mobile-menu-link block py-3 border-b border-gray-100 hover:text-[var(--gold)] transition-colors">選ばれる理由</a>
+            <a href="#member" class="mobile-menu-link block py-3 border-b border-gray-100 hover:text-[var(--gold)] transition-colors">弁理士紹介</a>
+            <a href="#voice" class="mobile-menu-link block py-3 border-b border-gray-100 hover:text-[var(--gold)] transition-colors">お客様の声</a>
+            <a href="#faq" class="mobile-menu-link block py-3 border-b border-gray-100 hover:text-[var(--gold)] transition-colors">FAQ</a>
+            <a href="#entry" class="mobile-menu-link btn-gold block py-4 text-center font-bold rounded-sm mt-2">説明会に申し込む</a>
+        </div>
+    </nav>
+
+    <!-- Main Visual (MV) -->
+    <section class="relative min-h-screen flex items-center pt-20 bg-[var(--soft-white)] overflow-hidden">
+        <div class="absolute right-0 top-0 w-1/2 h-full opacity-10 hidden lg:block">
+            <!-- 幾何学的な構造美をイメージした装飾 -->
+            <svg viewBox="0 0 100 100" class="w-full h-full">
+                <path d="M0,0 L100,0 L100,100 Z" fill="var(--deep-blue)" />
+            </svg>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 w-full relative z-10">
+            <div class="max-w-3xl">
+                <span class="inline-block px-4 py-1 border border-[var(--deep-blue)] text-xs font-bold mb-8 fade-up">FOR SCIENCE & TECHNOLOGY BACKGROUNDS</span>
+                <h1 class="text-3xl sm:text-5xl md:text-7xl serif font-bold mb-8 leading-tight fade-up" style="transition-delay: 0.1s;">
+                    理系の知を、<br>
+                    未来の<span class="text-[var(--gold)]">知財</span>へ。
+                </h1>
+                <p class="text-base sm:text-xl text-gray-600 mb-12 max-w-xl fade-up" style="transition-delay: 0.2s;">
+                    AI、量子、宇宙、核融合。技術の最前線で「権利」をデザインするプロフェッショナルへ。あなたのキャリアを、社会を変える一助に変えませんか。
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 fade-up" style="transition-delay: 0.3s;">
+                    <a href="#entry" class="btn-gold px-6 sm:px-10 py-4 sm:py-5 rounded-sm text-center font-bold text-base sm:text-lg">
+                        事務所説明会に申し込む
+                    </a>
+                    <a href="#usp" class="btn-outline-gold px-6 sm:px-10 py-4 sm:py-5 rounded-sm text-center font-bold text-base sm:text-lg">
+                        私たちの専門性を見る
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- USP: 選ばれる理由 -->
+    <section id="usp" class="section-padding bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 fade-up">
+                <h2 class="text-sm font-bold tracking-[0.2em] mb-4 text-[var(--gold)]">WHY US</h2>
+                <p class="text-3xl md:text-4xl serif font-bold">最先端の伴走者であるために</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- AI & Computing -->
+                <div class="p-8 border border-gray-100 hover:shadow-xl transition-all duration-500 fade-up">
+                    <div class="w-12 h-12 bg-[var(--soft-white)] flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">AI・量子計算</h3>
+                    <p class="text-gray-500 text-sm sm:text-base">次世代アルゴリズムや量子超越性の実証など、情報科学の深淵に触れる案件が豊富です。</p>
+                </div>
+                <!-- Space & Physics -->
+                <div class="p-8 border border-gray-100 hover:shadow-xl transition-all duration-500 fade-up" style="transition-delay: 0.1s;">
+                    <div class="w-12 h-12 bg-[var(--soft-white)] flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">宇宙・核融合</h3>
+                    <p class="text-gray-500 text-sm sm:text-base">人類のフロンティアを拡げる宇宙開発や、クリーンエネルギーの究極である核融合技術の権利化を支援。</p>
+                </div>
+                <!-- Chem & Bio -->
+                <div class="p-8 border border-gray-100 hover:shadow-xl transition-all duration-500 fade-up" style="transition-delay: 0.2s;">
+                    <div class="w-12 h-12 bg-[var(--soft-white)] flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.628.283a2 2 0 01-1.186.127l-2.431-.486a2 2 0 00-1.022.547l-1.428 1.428a2 2 0 00-.547 1.022l-.477 2.387a2 2 0 00.517 3.86l.283.628a2 2 0 00.127 1.186l.486 2.431a2 2 0 001.022 1.022l1.428 1.428a2 2 0 002.387-.477l.628-.283a2 2 0 011.186-.127l2.431.486a2 2 0 001.022-.547l1.428-1.428a2 2 0 00.547-1.022l.477-2.387a2 2 0 00-.517-3.86l-.283-.628a2 2 0 00-.127-1.186l-.486-2.431a2 2 0 00-1.022-1.022l-1.428-1.428z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">化学・バイオ</h3>
+                    <p class="text-gray-500 text-sm sm:text-base">新素材やゲノム編集、医薬品など、緻密な論理構築が求められる化学分野でも高い実績を誇ります。</p>
+                </div>
+                <!-- Global Network -->
+                <div class="p-8 border border-gray-100 hover:shadow-xl transition-all duration-500 fade-up" style="transition-delay: 0.3s;">
+                    <div class="w-12 h-12 bg-[var(--soft-white)] flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9h18"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">グローバル知財</h3>
+                    <p class="text-gray-500 text-sm sm:text-base">米欧、中国、ASEANなど、世界各国の特許制度に精通し、日本企業の海外進出を盤石にします。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience: 在籍年数（ホワイト環境の証明） -->
+    <section class="bg-[var(--deep-blue)] text-white section-padding overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            <div class="fade-up">
+                <h2 class="text-sm font-bold tracking-[0.2em] mb-4 text-[var(--gold)]">SUSTAINABILITY</h2>
+                <p class="text-2xl md:text-4xl serif font-bold mb-8 leading-tight">「穏やかな実力主義」が<br>生む、圧倒的な定着率。</p>
+                <p class="text-gray-300 mb-8">
+                    過度な競争ではなく、一人のプロフェッショナルとしての成長を尊重。
+                    平均在籍年数の長さは、腰を据えて専門性を磨ける環境の証です。
+                </p>
+                <div class="grid grid-cols-2 gap-8">
+                    <div>
+                        <p class="text-sm text-gray-400 mb-2 uppercase tracking-widest">平均在籍年数</p>
+                        <div class="flex items-baseline">
+                            <span class="text-5xl font-bold text-[var(--gold)]">12</span>
+                            <span class="ml-2 text-xl font-bold">YEARS</span>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-400 mb-2 uppercase tracking-widest">離職率（過去3年）</p>
+                        <div class="flex items-baseline">
+                            <span class="text-5xl font-bold text-[var(--gold)]">3.2</span>
+                            <span class="ml-2 text-xl font-bold">%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="relative fade-up" style="transition-delay: 0.2s;">
+                <div class="huge-number opacity-20 absolute -top-10 -right-10 pointer-events-none">12</div>
+                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1000" alt="最新オフィスの全景 - 開放的で集中できる執務エリア" class="rounded-sm shadow-2xl relative z-10">
+            </div>
+        </div>
+    </section>
+
+    <!-- Member: 弁理士紹介 -->
+    <section id="member" class="section-padding bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 fade-up">
+                <div>
+                    <h2 class="text-sm font-bold tracking-[0.2em] mb-4 text-[var(--gold)]">PROFESSIONALS</h2>
+                    <p class="text-3xl md:text-4xl serif font-bold">理系のキャリアを、法で昇華させる。</p>
+                </div>
+                <p class="text-gray-500 md:max-w-md mt-6 md:mt-0">
+                    元エンジニア、元研究者。同じバックグラウンドを持つ先輩たちが、どのように知財のプロへ転身したのか。
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- Member 1 -->
+                <div class="flex flex-col md:flex-row gap-8 items-center md:items-start fade-up">
+                    <div class="w-full md:w-48 h-64 flex-shrink-0">
+                        <img src="person1.jpg" alt="シニア弁理士のポートレート - 穏やかな微笑みと誠実な眼差し" class="w-full h-full object-cover rounded-sm grayscale hover:grayscale-0 transition-all duration-500">
+                    </div>
+                    <div>
+                        <span class="text-[var(--gold)] font-bold text-xs uppercase tracking-widest">Patent Attorney / Electrical Engineering</span>
+                        <h3 class="text-2xl font-bold mt-2 mb-4">佐藤 健一 <span class="text-sm font-medium text-gray-400">入所8年目 / 元電機メーカー開発部</span></h3>
+                        <p class="text-gray-600 text-sm sm:text-base leading-relaxed mb-4">
+                            「開発の現場では一つの製品に深く関わりますが、特許事務所ではAIから量子まで、幅広い技術の『本質』を定義する。この抽象度の高い論理構築こそが、理系人間にとって最高に面白い仕事です。」
+                        </p>
+                        <ul class="text-xs text-gray-400 space-y-1">
+                            <li>● 専門領域：情報通信、信号処理、AIアルゴリズム</li>
+                            <li>● 趣味：電子工作、サイクリング</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Member 2 -->
+                <div class="flex flex-col md:flex-row gap-8 items-center md:items-start fade-up" style="transition-delay: 0.1s;">
+                    <div class="w-full md:w-48 h-64 flex-shrink-0">
+                        <img src="person2.jpg" alt="中堅弁理士と秘書の打ち合わせ風景 - 専門性とこだわりが共存する静かな熱量" class="w-full h-full object-cover rounded-sm grayscale hover:grayscale-0 transition-all duration-500">
+                    </div>
+                    <div>
+                        <span class="text-[var(--gold)] font-bold text-xs uppercase tracking-widest">Patent Attorney / Applied Chemistry</span>
+                        <h3 class="text-2xl font-bold mt-2 mb-4">高橋 美咲 <span class="text-sm font-medium text-gray-400">入所5年目 / 元材料化学研究職</span></h3>
+                        <p class="text-gray-600 text-sm sm:text-base leading-relaxed mb-4">
+                            「未経験での転職でしたが、当事務所の教育体制は極めてシステマチックでした。弁理士と秘書がチームとなり、一つの権利を磨き上げる。そこには研究室とはまた違う、静かな熱量と責任感があります。」
+                        </p>
+                        <ul class="text-xs text-gray-400 space-y-1">
+                            <li>● 専門領域：高分子化学、二次電池、触媒技術</li>
+                            <li>● 趣味：登山、ピアノ</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Voice: お客様の声 -->
+    <section id="voice" class="section-padding bg-[var(--soft-white)]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 fade-up">
+                <h2 class="text-sm font-bold tracking-[0.2em] mb-4 text-[var(--gold)]">CLIENT VOICE</h2>
+                <p class="text-3xl md:text-4xl serif font-bold">技術を理解し、価値を最大化する。</p>
+            </div>
+
+            <div class="max-w-5xl mx-auto">
+                <blockquote class="fade-up relative">
+                    <span class="absolute -top-10 -left-10 text-[var(--gold)] text-8xl opacity-20 serif">"</span>
+                    <p class="text-lg md:text-2xl lg:text-3xl serif leading-relaxed text-[var(--deep-blue)] mb-8 italic">
+                        川上特許事務所の弁理士の方々は、こちらの説明を待たずして技術の急所を理解してくださる。
+                        単なる手続き代行ではなく、知財戦略を共に構築するパートナーとして、これほど心強い存在はありません。
+                    </p>
+                    <footer class="text-right">
+                        <p class="font-bold text-lg">国立研究開発法人 先端科学技術振興機構</p>
+                        <p class="text-sm text-gray-500">プロジェクトマネージャー / 博士（工学）</p>
+                    </footer>
+                </blockquote>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section-padding bg-white">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="text-center mb-16 fade-up">
+                <h2 class="text-sm font-bold tracking-[0.2em] mb-4 text-[var(--gold)]">FAQ</h2>
+                <p class="text-3xl serif font-bold">よくある質問</p>
+            </div>
+
+            <div class="space-y-4">
+                <div class="faq-item fade-up" style="transition-delay: 0.1s;">
+                    <button class="w-full py-6 flex justify-between items-center text-left focus:outline-none" onclick="toggleFaq(this)">
+                        <span class="font-bold pr-8 text-lg">法律の知識が全くなくても大丈夫ですか？</span>
+                        <svg class="w-5 h-5 faq-icon transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p class="pb-6 text-gray-500">
+                            はい、問題ありません。現在活躍している弁理士の多くも、入所時は法律の知識ゼロでした。入所後は独自の研修カリキュラムに加え、OJTを通じて基礎から体系的に学べる環境を整えています。理系としての技術理解力があれば、法務知識は着実に身につきます。
+                        </p>
+                    </div>
+                </div>
+                <div class="faq-item fade-up" style="transition-delay: 0.2s;">
+                    <button class="w-full py-6 flex justify-between items-center text-left focus:outline-none" onclick="toggleFaq(this)">
+                        <span class="font-bold pr-8 text-lg">実力主義とありましたが、ノルマなどはありますか？</span>
+                        <svg class="w-5 h-5 faq-icon transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p class="pb-6 text-gray-500">
+                            「数字上のノルマ」に追われる環境ではありません。私たちが重視するのは「仕事の質」と「顧客への貢献度」です。成果は正当に評価され、賞与や昇給に反映される仕組みですが、それは個人の責任感に裏打ちされたプロ意識を尊重するものであり、ギスギスした競争とは無縁の「穏やかな実力主義」です。
+                        </p>
+                    </div>
+                </div>
+                <div class="faq-item fade-up" style="transition-delay: 0.3s;">
+                    <button class="w-full py-6 flex justify-between items-center text-left focus:outline-none" onclick="toggleFaq(this)">
+                        <span class="font-bold pr-8 text-lg">リモートワークやワークライフバランスについて教えてください。</span>
+                        <svg class="w-5 h-5 faq-icon transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p class="pb-6 text-gray-500">
+                            週2〜3回のリモートワークを導入しています。また、残業は月平均15時間程度に抑えられており、多くの職員が資格取得の勉強やプライベートの時間を大切にしています。効率的に成果を出すことが美徳とされる文化です。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Entry Form: 申し込みフォーム -->
+    <section id="entry" class="section-padding bg-[var(--soft-white)]">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="bg-white p-8 md:p-16 shadow-2xl rounded-sm fade-up">
+                <div class="text-center mb-12">
+                    <h2 class="text-sm font-bold tracking-[0.2em] mb-4 text-[var(--gold)]">CONTACT</h2>
+                    <p class="text-3xl serif font-bold mb-4">事務所説明会へのご招待</p>
+                    <p class="text-gray-500">知財業界の現状や、当事務所でのキャリアについて詳しくお話しします。<br>オンライン開催も承っております。</p>
+                </div>
+
+                <form action="#" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-bold uppercase tracking-widest text-gray-400 mb-2">お名前</label>
+                            <input type="text" placeholder="氏名" class="w-full px-4 py-3 border border-gray-200 focus:border-[var(--deep-blue)] focus:ring-0 outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold uppercase tracking-widest text-gray-400 mb-2">メールアドレス</label>
+                            <input type="email" placeholder="example@mail.com" class="w-full px-4 py-3 border border-gray-200 focus:border-[var(--deep-blue)] focus:ring-0 outline-none transition-all">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">専門分野・バックグラウンド</label>
+                        <select class="w-full px-4 py-3 border border-gray-200 focus:border-[var(--deep-blue)] focus:ring-0 outline-none transition-all bg-white">
+                            <option>情報・電気・電子</option>
+                            <option>機械・物理</option>
+                            <option>化学・バイオ</option>
+                            <option>その他理系分野</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">希望する形式</label>
+                        <div class="flex space-x-6 mt-2">
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="radio" name="style" class="text-[var(--deep-blue)] focus:ring-0">
+                                <span class="text-sm">オンライン</span>
+                            </label>
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="radio" name="style" class="text-[var(--deep-blue)] focus:ring-0">
+                                <span class="text-sm">対面（事務所来訪）</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">自由記述（質問事項など）</label>
+                        <textarea rows="4" placeholder="転職にあたっての不安や、知りたいことなどをご自由にご記入ください。" class="w-full px-4 py-3 border border-gray-200 focus:border-[var(--deep-blue)] focus:ring-0 outline-none transition-all"></textarea>
+                    </div>
+                    <div class="pt-6">
+                        <button type="submit" class="w-full btn-gold py-4 sm:py-5 rounded-sm font-bold text-base sm:text-lg">
+                            上記内容で申し込む
+                        </button>
+                    </div>
+                    <p class="text-center text-xs text-gray-400 mt-4">
+                        ご記入いただいた個人情報は、採用活動以外の目的で使用することはありません。
+                    </p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-100 py-12">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-8 md:mb-0">
+                <div class="text-xl font-bold tracking-tighter text-[var(--deep-blue)]">KAWAKAMI</div>
+                <p class="text-xs text-gray-400 mt-2 uppercase tracking-widest">© 2024 Kawakami Patent Office. All Rights Reserved.</p>
+            </div>
+            <div class="flex space-x-8 text-xs font-bold text-[var(--deep-blue)] tracking-widest">
+                <a href="#" class="hover:text-[var(--gold)] transition-colors">OFFICE PROFILE</a>
+                <a href="#" class="hover:text-[var(--gold)] transition-colors">PRIVACY POLICY</a>
+                <a href="#" class="hover:text-[var(--gold)] transition-colors">CONTACT</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for Fade Up Animation
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up').forEach(el => {
+            observer.observe(el);
+        });
+
+        // FAQ Accordion
+        function toggleFaq(button) {
+            const item = button.parentElement;
+            const isOpen = item.classList.contains('open');
+
+            // Close all items
+            document.querySelectorAll('.faq-item').forEach(el => {
+                el.classList.remove('open');
+            });
+
+            // If the clicked item wasn't open, open it
+            if (!isOpen) {
+                item.classList.add('open');
+            }
+        }
+
+        // Hamburger Menu
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const bars = hamburger.querySelectorAll('.hamburger-bar');
+
+        hamburger.addEventListener('click', () => {
+            const isOpen = !mobileMenu.classList.contains('hidden');
+            if (isOpen) {
+                mobileMenu.classList.add('hidden');
+                bars[0].style.transform = '';
+                bars[1].style.opacity = '';
+                bars[2].style.transform = '';
+            } else {
+                mobileMenu.classList.remove('hidden');
+                mobileMenu.classList.add('flex');
+                bars[0].style.transform = 'translateY(8px) rotate(45deg)';
+                bars[1].style.opacity = '0';
+                bars[2].style.transform = 'translateY(-8px) rotate(-45deg)';
+            }
+        });
+
+        // メニューリンクをタップしたら閉じる
+        document.querySelectorAll('.mobile-menu-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('flex');
+                bars[0].style.transform = '';
+                bars[1].style.opacity = '';
+                bars[2].style.transform = '';
+            });
+        });
+
+        // Smooth Scroll for Internal Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
